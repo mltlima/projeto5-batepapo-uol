@@ -6,12 +6,12 @@ function getDataAPI() {
 } 
 
 function sucessHandle(data) {
-    console.log(data);
+    console.log(data.data);
 }
 
 function errorHandle(error) {
-    //console.log("Status code: " + error.response.status); 
-	//console.log("Mensagem de erro: " + error.response.data);
+    console.log("Status code: " + error.response.status); 
+	console.log("Mensagem de erro: " + error.response.data);
 }
 
 function enterRoom() {
@@ -28,7 +28,8 @@ function enterRoom() {
         if (!correctUserInput) {
             input = prompt("Nome já esta em uso, digite um novo nome");
         } else {
-            setTimeout(keepUserActive(user),5000);
+            //setTimeout(keepUserActive(user),5000);
+            setTimeout(keepUserActive(promise),5000);
         }
         promise.catch(errorHandle);
     }
@@ -40,10 +41,9 @@ function userSucess(data) {
     return true;
 }
 
-function keepUserActive(user) {
+function keepUserActive(promise) {
     
     setInterval(() => {
-        const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants ", user);
         promise.then(userSucess);
         promise.catch(errorHandle);
     },5000)   
