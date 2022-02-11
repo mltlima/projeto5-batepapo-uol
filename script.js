@@ -1,5 +1,4 @@
 let lastMessage = null;
-let isMessagePrintable = true;
 let mainUser = "";
 
 function getDataAPI() {
@@ -10,12 +9,18 @@ function getDataAPI() {
 } 
 
 function sucessHandle(data) {
-    console.log(data.data);
+    //console.log(data.data);
 }
 
 function userSucess() {
-    getDataAPI();
-    return true;
+    setInterval(() => {
+        keepUserActive();
+    }, 5000);
+}
+
+function userError() {
+    alert("Nome já esta em uso, digite um novo nome");
+    enterUserName();
 }
 
 function errorHandle(error) {
@@ -23,32 +28,18 @@ function errorHandle(error) {
 	console.log("Mensagem de erro: " + error.response.data);
 }
 
-function enterRoom() {
-
-    let correctUserInput = false;
-
+function enterUserName() {
     mainUser = prompt("Qual o seu lindo nome?");
-    
-    while (!correctUserInput) {
-        
-        let user = {name: mainUser}
-        const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants ", user);    
-        correctUserInput = promise.then(userSucess);
-        if (!correctUserInput) {
-            mainUser = prompt("Nome já esta em uso, digite um novo nome");
-        } else {
-            //setTimeout(keepUserActive(user),5000);
-            setInterval(() => {
-                keepUserActive(user);
-            }, 5000);
-        }
-        promise.catch(errorHandle);
-    }
-} enterRoom();
+   
+    const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants ", {name: mainUser});
+        promise.then(userSucess);
+        promise.catch(userError);
+} enterUserName();
+   
 
 function keepUserActive(user) {
-    const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/status ", user);    
-        promise.then(userSucess);
+    const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/status ", {name: mainUser});    
+        promise.then(sucessHandle);
         promise.catch(errorHandle);
 }
 
@@ -100,8 +91,22 @@ function messageSucess(data) {
 
         if (i === messages.length - 1) {
             lastMessage = messages[i];
-            console.log(lastMessage);
+            //console.log(lastMessage);
         }
     }
     
+}
+
+function sendMessage() {
+    let footer = document.querySelector("footer input");
+    let message = {
+        from: mainUser,
+        to: "Todos",
+        text: footer.value,
+        type: "message"
+    }
+    let promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", message);
+    promise.then(sucessHandle);
+    promise.catch(errorHandle);
+    footer.value = "";
 }

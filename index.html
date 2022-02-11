@@ -16,7 +16,7 @@
 <body>
     <header>
         <img src="images/logo 1.png" alt="logo principal">
-        <img src="images/Vector.png" alt="icone menu">
+        <ion-icon name="people-sharp"></ion-icon>
     </header>
 
     <main>
@@ -24,9 +24,12 @@
     </main>
 
     <footer>
-
+        <input type="text"  placeholder="Escreva aqui...">
+        <ion-icon name="paper-plane-outline" onclick="sendMessage()"></ion-icon>
     </footer>
     
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>

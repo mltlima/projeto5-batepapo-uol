@@ -16,7 +16,12 @@ header {
 }
 
 header img {
-    margin: 0px 20px 0px 20px;
+    margin-left: 20px;
+}
+
+header ion-icon{
+    font-size: 40px;
+    margin-right: 24px;
 }
 
 body {
@@ -36,6 +41,26 @@ footer {
     background-color: white;
     z-index: 1;
     box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    font-family: Roboto;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+footer input{
+    height: 80%;
+    width: 100%;
+    border: none;
+    font-style: italic;
+    font-size: 18px;
+    outline: none;
+    font-weight: 400;
+}
+
+footer ion-icon:hover {
+    cursor: pointer;
 }
 
 .container-box {
