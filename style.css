@@ -51,11 +51,20 @@ footer {
     line-height: 16px;
 }
 
+.normal-messages {
+    background-color: white;
+}
+
+.private_message {
+    background-color: #FFDEDE;
+}
+
 .time {
     color: #AAAAAA;
     margin-right: 5px;
 }
 
-.user {
+.strong {
     font-weight: 700;
 }
+
