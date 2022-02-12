@@ -49,8 +49,16 @@ function messageErrorHandle() {
     window.location.reload();
 }
 
+let user = document.querySelector(".input-screen input");
+user.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault()
+        enterUserName()
+    }
+})
+
 function enterUserName() {
-    mainUser = document.querySelector(".input-screen input").value;
+    mainUser = user.value;
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants ", {name: mainUser});
         promise.then(userSucess);
@@ -113,8 +121,16 @@ function messageSucess(data) {
     
 }
 
+let footer = document.querySelector("footer input");
+footer.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) {
+        event.preventDefault()
+        sendMessage()
+    }
+})
+
 function sendMessage() {
-    let footer = document.querySelector("footer input");
+
     let message = {
         from: mainUser,
         to: "Todos",
