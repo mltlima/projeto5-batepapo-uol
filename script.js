@@ -1,26 +1,43 @@
 let lastMessage = null;
 let mainUser = "";
 
-function getDataAPI() {
-    const promise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
-    
-    promise.then(sucessHandle);
-    promise.catch(errorHandle);
-} 
+
 
 function sucessHandle(data) {
     //console.log(data.data);
 }
 
+function remove(className) {
+    className.classList.remove("hide");
+}
+
 function userSucess() {
+
+    document.querySelector(".input-screen input").remove();
+    document.querySelector(".input-screen button").remove();
+    document.querySelector(".input-screen").innerHTML += 
+        `<img class="loading" src="/images/loading.gif">
+        <p>Entrando...</p>
+        `
+    setTimeout(() =>{
+        document.querySelectorAll(".hide").forEach(remove);
+        document.querySelector(".input-screen").classList.add("hide");
+    },3000);
+    
+
     setInterval(() => {
         keepUserActive();
     }, 5000);
+
+    setInterval(() => {
+        updateMessages();
+    },3000)
 }
 
 function userError() {
     alert("Nome já esta em uso, digite um novo nome");
-    enterUserName();
+    console.log("Status code: " + error.response.status); 
+	console.log("Mensagem de erro: " + error.response.data);
 }
 
 function errorHandle(error) {
@@ -28,16 +45,20 @@ function errorHandle(error) {
 	console.log("Mensagem de erro: " + error.response.data);
 }
 
+function messageErrorHandle() {
+    window.location.reload();
+}
+
 function enterUserName() {
-    mainUser = prompt("Qual o seu lindo nome?");
-   
+    mainUser = document.querySelector(".input-screen input").value;
+
     const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants ", {name: mainUser});
         promise.then(userSucess);
         promise.catch(userError);
-} enterUserName();
+}
    
 
-function keepUserActive(user) {
+function keepUserActive() {
     const promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/status ", {name: mainUser});    
         promise.then(sucessHandle);
         promise.catch(errorHandle);
@@ -49,14 +70,10 @@ function updateMessages() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
         promise.then(messageSucess);
         promise.catch(errorHandle);
+}
 
-} 
-setInterval(() => {
-    updateMessages();
-},3000)
 
 function messageSucess(data) {
-    //console.log(data.data);
     let messages = data.data
     const mainHTML = document.querySelector("main");
 
@@ -91,7 +108,6 @@ function messageSucess(data) {
 
         if (i === messages.length - 1) {
             lastMessage = messages[i];
-            //console.log(lastMessage);
         }
     }
     
@@ -107,6 +123,6 @@ function sendMessage() {
     }
     let promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", message);
     promise.then(sucessHandle);
-    promise.catch(errorHandle);
+    promise.catch(messageErrorHandle);
     footer.value = "";
 }
