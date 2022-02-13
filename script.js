@@ -8,7 +8,9 @@ function sucessHandle(data) {
 }
 
 function remove(className) {
-    className.classList.remove("hide");
+    if(!className.innerHTML.includes("nav")){
+        className.classList.remove("hide");
+    }
 }
 
 function userSucess() {
@@ -22,7 +24,7 @@ function userSucess() {
     setTimeout(() =>{
         document.querySelectorAll(".hide").forEach(remove);
         document.querySelector(".input-screen").classList.add("hide");
-    },3000);
+    },5000);//verificar tempo ###############################################################################
     
 
     setInterval(() => {
@@ -142,3 +144,20 @@ function sendMessage() {
     promise.catch(messageErrorHandle);
     footer.value = "";
 }
+
+
+/*window.addEventListener("load", () => {
+    document.body.classList.remove("preload");
+});
+*/
+document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.querySelector(".nav");
+
+    document.querySelector(".menu").addEventListener("click", () => {
+        nav.classList.remove("hide");
+    });
+
+    document.querySelector(".nav-overlay").addEventListener("click", () => {
+        nav.classList.add("hide");
+    });
+});

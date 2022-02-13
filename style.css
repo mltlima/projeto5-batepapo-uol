@@ -143,6 +143,62 @@ footer ion-icon:hover {
     font-weight: 700;
 }
 
+
+.nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 100vh;
+    width: 259px;
+    background-color: white;
+    padding-left: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.nav-links ion-icon {
+    font-size: 20px;
+}
+
+.nav-links p {
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 9px;
+}
+
+.nav-link {
+    display: flex;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    padding: 20px;
+}
+
+.check {
+    color: limegreen;
+    position: absolute;
+    right: 27px;
+}
+
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+
 .hide {
     display: none;
 }

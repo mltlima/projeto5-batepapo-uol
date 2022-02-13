@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="preload">
 
     <section class="input-screen">
         <img src="images/logo 1.png">
@@ -23,10 +23,35 @@
     
     <header class="hide">
         <img src="images/logo 1.png" alt="logo principal">
-        <ion-icon name="people-sharp"></ion-icon>
+        <ion-icon class="menu" name="people-sharp"></ion-icon>
     </header>
 
-    <main class="hide"></main>
+    <main class="hide">
+
+    </main>
+
+    <nav class="nav hide">
+        <div class="nav-links">
+            <h1>Escolha um contato para enviar mensagem:</h1>
+            <div class="nav-link">
+                <ion-icon name="people-sharp"></ion-icon>
+                <p>Todos</p>
+                <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+            </div>       
+            <h1>Escolha a visibilidade:</h1>
+            <div class="nav-link">
+                <ion-icon name="lock-open-sharp"></ion-icon>
+                <p>Público</p>
+                <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+            </div>
+            <div class="nav-link">
+                <ion-icon name="lock-open-sharp"></ion-icon>
+                <p>Reservadamente</p>
+                <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+            </div>
+        </div>
+        <div class="nav-overlay"></div>
+    </nav>
 
     <footer class="hide">
         <input type="text"  placeholder="Escreva aqui...">
