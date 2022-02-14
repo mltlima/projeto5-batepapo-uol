@@ -1,7 +1,8 @@
 let lastMessage = null;
 let mainUser = "";
-
-
+let visibility = null;
+let sendTo = null;
+//let users = document.querySelectorAll('.user');
 
 function sucessHandle(data) {
     //console.log(data.data);
@@ -34,6 +35,11 @@ function userSucess() {
     setInterval(() => {
         updateMessages();
     },3000)
+
+    setInterval(() => {
+        getOnlineUsers();
+        
+    },10000)
 }
 
 function userError() {
@@ -132,17 +138,63 @@ footer.addEventListener("keyup", function(event) {
 })
 
 function sendMessage() {
-
-    let message = {
-        from: mainUser,
-        to: "Todos",
-        text: footer.value,
-        type: "message"
+    let message = {};
+    
+    if (sendTo != null && visibility.innerText.includes("Reservadamente")) {        
+        message = {
+            from: mainUser,
+            to: sendTo.innerText,
+            text: footer.value,
+            type: "private_message"
+        } 
+    } else if (sendTo != null){
+        message = {
+            from: mainUser,
+            to: sendTo.innerText,
+            text: footer.value,
+            type: "message"
+        } 
+    } else {
+        message = {
+            from: mainUser,
+            to: "Todos",
+            text: footer.value,
+            type: "message"
+        }
     }
+    
     let promise = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", message);
     promise.then(sucessHandle);
     promise.catch(messageErrorHandle);
     footer.value = "";
+}
+
+function getOnlineUsers() {
+    const promise = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+        promise.then(usersOnline);
+        promise.catch(errorHandle);
+} 
+
+function usersOnline(data) {
+    const usersOn = document.querySelector(".users-online");
+
+    usersOn.innerHTML = "";
+
+    for (let i = 0; i < data.data.length; i++) {
+        const user = data.data[i];
+        usersOn.innerHTML += `  <div class="nav-link user" onclick="selectUser(this)">
+                                        <ion-icon name="person-circle"></ion-icon>
+                                        <p>${user.name}</p>
+                                        <ion-icon class="check hide-check" name="checkmark-sharp"></ion-icon>
+                                    </div>  
+        `
+        if (sendTo != null) {
+            if (sendTo.innerHTML.includes(user.name)) {
+                usersOn.lastElementChild.querySelector(".check").classList.remove("hide-check");
+                sendTo = usersOn.lastElementChild;
+            }
+        }
+    }
 }
 
 
@@ -161,3 +213,42 @@ document.addEventListener("DOMContentLoaded", () => {
         nav.classList.add("hide");
     });
 });
+/*
+users.forEach(user => user.addEventListener('click', () =>{
+    if (sendTo != null) {
+        sendTo.querySelector(".check").classList.add("hide-check");
+    }
+    sendTo = user;
+    //console.log(user.querySelector(".check"));
+    user.querySelector(".check").classList.remove("hide-check");
+}))*/
+
+function selectUser(user) {
+    if (sendTo != null) {
+        sendTo.querySelector(".check").classList.add("hide-check");
+    }
+    sendTo = user;
+    user.querySelector(".check").classList.remove("hide-check");
+    messageVisibity(1)
+}
+
+function selectVisibility(selectedVisibility) {
+    if (visibility != null) {
+        visibility.querySelector(".check").classList.add("hide-check");
+    }
+    visibility = selectedVisibility;
+    selectedVisibility.querySelector(".check").classList.remove("hide-check");
+    messageVisibity(0)
+}
+
+function messageVisibity(condition) {
+    const sendMessageTo = document.querySelector(".Send-message-to")
+
+    if (condition) {
+        sendMessageTo.innerHTML = 
+        `Enviando para ${sendTo.innerText}`
+    }else {
+        sendMessageTo.innerHTML = 
+        `Enviando para ${sendTo.innerText}  (${visibility.innerText})`
+    }
+}

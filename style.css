@@ -198,7 +198,16 @@ h1 {
     z-index: 1;
 }
 
+.Send-message-to {
+    font-size: 13px;
+    color: #AEAEAE
+}
+
 
 .hide {
+    display: none;
+}
+
+.hide-check{
     display: none;
 }
