@@ -30,6 +30,14 @@
 
     </main>
 
+    <footer class="hide">
+        <div data-identifier="message">
+            <input type="text"  placeholder="Escreva aqui...">
+            <p class="Send-message-to"></p>
+        </div>
+        <ion-icon name="paper-plane-outline" onclick="sendMessage()" data-identifier="send-message"></ion-icon>
+    </footer>
+
     <nav class="nav hide">
         <div class="nav-links">
             <h1>Escolha um contato para enviar mensagem:</h1>
@@ -55,14 +63,6 @@
         </div>
         <div class="nav-overlay"></div>
     </nav>
-
-    <footer class="hide">
-        <div>
-            <input type="text"  placeholder="Escreva aqui...">
-            <p class="Send-message-to"></p>
-        </div>
-        <ion-icon name="paper-plane-outline" onclick="sendMessage()"></ion-icon>
-    </footer>
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

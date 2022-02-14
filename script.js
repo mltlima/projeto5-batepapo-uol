@@ -2,7 +2,7 @@ let lastMessage = null;
 let mainUser = "";
 let visibility = null;
 let sendTo = null;
-//let users = document.querySelectorAll('.user');
+
 
 function sucessHandle(data) {
     //console.log(data.data);
@@ -38,7 +38,6 @@ function userSucess() {
 
     setInterval(() => {
         getOnlineUsers();
-        
     },10000)
 }
 
@@ -189,7 +188,7 @@ function usersOnline(data) {
                                     </div>  
         `
         if (sendTo != null) {
-            if (sendTo.innerHTML.includes(user.name)) {
+            if (sendTo.innerText.trim() == user.name) {
                 usersOn.lastElementChild.querySelector(".check").classList.remove("hide-check");
                 sendTo = usersOn.lastElementChild;
             }
@@ -197,11 +196,6 @@ function usersOnline(data) {
     }
 }
 
-
-/*window.addEventListener("load", () => {
-    document.body.classList.remove("preload");
-});
-*/
 document.addEventListener("DOMContentLoaded", () => {
     const nav = document.querySelector(".nav");
 
@@ -213,15 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
         nav.classList.add("hide");
     });
 });
-/*
-users.forEach(user => user.addEventListener('click', () =>{
-    if (sendTo != null) {
-        sendTo.querySelector(".check").classList.add("hide-check");
-    }
-    sendTo = user;
-    //console.log(user.querySelector(".check"));
-    user.querySelector(".check").classList.remove("hide-check");
-}))*/
 
 function selectUser(user) {
     if (sendTo != null) {
@@ -229,7 +214,7 @@ function selectUser(user) {
     }
     sendTo = user;
     user.querySelector(".check").classList.remove("hide-check");
-    messageVisibity(1)
+    messageVisibity()
 }
 
 function selectVisibility(selectedVisibility) {
@@ -238,13 +223,13 @@ function selectVisibility(selectedVisibility) {
     }
     visibility = selectedVisibility;
     selectedVisibility.querySelector(".check").classList.remove("hide-check");
-    messageVisibity(0)
+    messageVisibity()
 }
 
-function messageVisibity(condition) {
+function messageVisibity() {
     const sendMessageTo = document.querySelector(".Send-message-to")
 
-    if (condition) {
+    if (visibility == null) {
         sendMessageTo.innerHTML = 
         `Enviando para ${sendTo.innerText}`
     }else {
